@@ -122,7 +122,8 @@ allocproc(void)
     }
   if (!found) {
     release(&ptable.lock);
-    return 0;
+    p->start_ticks = ticks;
+    return p;
   }
   p->state = EMBRYO;
   p->pid = nextpid++;
@@ -560,11 +561,28 @@ procdumpP2P3P4(struct proc *p, char *state_string)
   return;
 }
 #elif defined(CS333_P1)
+
+#ifdef CS333_P1
 void
 procdumpP1(struct proc *p, char *state_string)
 {
-  cprintf("TODO for Project 1, delete this line and implement procdumpP1() in proc.c to print a row\n");
-  return;
+  
+  // task 4
+  int elapsed_ms = ticks - p->start_ticks;
+  int elapsed_sec = elapsed_ms/1000;
+  int mod_elapsed = elapsed_ms % 1000;
+  cprintf("%d\t%s\t\t%d.%d\t%s\t%d\t", p->pid, p->name, elapsed_sec, mod_elapsed, state_string, p->sz);
+  #endif
+
+  // elapsed_ms =elapsed_ms %1000;
+  // char* zeros = "";
+  // if(elapsed_ms < 100 && elapsed_ms >= 10){
+  //   zeros = "0";
+  // }
+  // if(elapsed_ms < 10){
+  //   zeros = "00";
+  // }
+  // cprintf("%d\t%s\t\t%d.%s%d\t%s\t%d\t", p->pid, p->name, elapsed_sec, zeros, elapsed_ms, state_string, p->sz);
 }
 #endif
 

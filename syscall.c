@@ -6,6 +6,7 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
+// #include "date.h"
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -107,6 +108,12 @@ extern int sys_uptime(void);
 extern int sys_halt(void);
 #endif // PDX_XV6
 
+// task 3 add new syscall date
+#ifdef CS333_P1
+extern int sys_date(void);
+#endif //  CS333_P1
+
+
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
 [SYS_exit]    sys_exit,
@@ -132,6 +139,11 @@ static int (*syscalls[])(void) = {
 #ifdef PDX_XV6
 [SYS_halt]    sys_halt,
 #endif // PDX_XV6
+
+// task 3
+#ifdef CS333_P1
+[SYS_date]    sys_date,
+#endif // CS333_P1
 };
 
 #ifdef PRINT_SYSCALLS
@@ -157,9 +169,13 @@ static char *syscallnames[] = {
   [SYS_link]    "link",
   [SYS_mkdir]   "mkdir",
   [SYS_close]   "close",
+  [SYS_date]    "date",
 #ifdef PDX_XV6
   [SYS_halt]    "halt",
 #endif // PDX_XV6
+#ifdef CS333_P1
+  [SYS_date]    "date",
+#endif // CS333_P1
 };
 #endif // PRINT_SYSCALLS
 
@@ -172,9 +188,13 @@ syscall(void)
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
+    // task 1
+    #ifdef PRINT_SYSCALLS
+       cprintf("%s -> %d\n", syscallnames[num], curproc->tf->eax);
+    #endif //CS333_P1
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             curproc->pid, curproc->name, num);
     curproc->tf->eax = -1;
   }
-}
+}        

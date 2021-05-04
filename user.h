@@ -3,6 +3,7 @@ struct rtcdate;
 struct uproc;
 
 // system calls
+// int date(struct rtcdate *);
 int fork(void);
 int exit(void) __attribute__((noreturn));
 int wait(void);
@@ -25,6 +26,11 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int halt(void);
+
+// task 3
+#ifdef CS333_P1
+int date(struct rtcdate*);
+#endif //CS333_P1
 
 // ulib.c
 int stat(char*, struct stat*);
