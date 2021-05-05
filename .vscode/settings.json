@@ -1,6 +1,0 @@
-{
-    "C_Cpp.vcFormat.indent.accessSpecifiers": true,
-    "C_Cpp.vcFormat.indent.lambdaBracesWhenParameter": false,
-    "C_Cpp.vcFormat.indent.namespaceContents": false,
-    "C_Cpp.vcFormat.indent.caseContents": false
-}
