@@ -10,7 +10,6 @@
 #include "pdx-kernel.h"
 #endif // PDX_XV6
 
-
 int
 sys_fork(void)
 {

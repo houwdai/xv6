@@ -197,4 +197,4 @@ syscall(void)
             curproc->pid, curproc->name, num);
     curproc->tf->eax = -1;
   }
-}        
+}
