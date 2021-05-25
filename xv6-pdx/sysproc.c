@@ -98,7 +98,6 @@ sys_halt(void)
 }
 #endif // PDX_XV6
 
-// task 3
 #ifdef CS333_P1
 int sys_date(void)
 {

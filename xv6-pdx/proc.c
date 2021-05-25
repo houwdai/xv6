@@ -122,9 +122,9 @@ allocproc(void)
     }
   if (!found) {
     release(&ptable.lock);
-    p->start_ticks = ticks;
-    return p;
+    return 0;
   }
+
   p->state = EMBRYO;
   p->pid = nextpid++;
   release(&ptable.lock);
@@ -149,7 +149,9 @@ allocproc(void)
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
-
+  #ifdef CS333_P1
+    p->start_ticks = ticks;
+  #endif
   return p;
 }
 
@@ -565,11 +567,18 @@ void
 procdumpP1(struct proc *p, char *state_string)
 {
   #ifdef CS333_P1
-  int elapsed_ms = ticks - p->start_ticks;
-  int elapsed_sec = elapsed_ms/1000;
-  int mod_elapsed = elapsed_ms % 1000;
-  cprintf("%d\t%s\t\t%d.%d\t%s\t%d\t", p->pid, p->name, elapsed_sec, mod_elapsed, state_string, p->sz);
-  #endif
+    int elapsed_in_ms = ticks - p->start_ticks;
+    int elapsed_sec = elapsed_in_ms / 1000;
+    int modulo_elapsed = elapsed_in_ms % 1000;
+    char* zero = "";
+    if (modulo_elapsed >= 10 && modulo_elapsed < 100) {
+      zero = "0";
+    }
+    if (modulo_elapsed < 10) {
+      zero = "00";
+    }
+    cprintf("%d\t%s\t\t%d.%s%d\t%s\t%d\t", p->pid, p->name, elapsed_sec, zero, modulo_elapsed, state_string, p->sz);
+  #endif // CS333_P1
 }
 #endif
 
