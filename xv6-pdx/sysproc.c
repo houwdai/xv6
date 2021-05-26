@@ -99,12 +99,14 @@ sys_halt(void)
 #endif // PDX_XV6
 
 #ifdef CS333_P1
-int sys_date(void)
+// shutdown QEMU
+int
+sys_date(void)
 {
   struct rtcdate *d;
-  if(argptr(0, (void*)&d, sizeof(struct rtcdate)) < 0)
+  if (argptr(0, (void*)&d, sizeof(struct rtcdate)) < 0 )
     return -1;
   cmostime(d);
   return 0;
 }
-#endif //CS333_P1
+#endif

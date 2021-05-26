@@ -25,10 +25,9 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int halt(void);
-// task 3
 #ifdef CS333_P1
 int date(struct rtcdate*);
-#endif //CS333_P1
+#endif // CS333_P1
 
 // ulib.c
 int stat(char*, struct stat*);

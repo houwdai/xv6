@@ -6,7 +6,6 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
-// #include "date.h"
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -107,12 +106,10 @@ extern int sys_uptime(void);
 #ifdef PDX_XV6
 extern int sys_halt(void);
 #endif // PDX_XV6
-
-// task 3 add new syscall date
 #ifdef CS333_P1
+// internally, the function prototype must be ’int’ not ’uint’ for sys_date()
 extern int sys_date(void);
-#endif //  CS333_P1
-
+#endif // CS333_P1
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -139,11 +136,9 @@ static int (*syscalls[])(void) = {
 #ifdef PDX_XV6
 [SYS_halt]    sys_halt,
 #endif // PDX_XV6
-
-// task 3
 #ifdef CS333_P1
 [SYS_date]    sys_date,
-#endif // CS333_P1
+#endif
 };
 
 #ifdef PRINT_SYSCALLS
@@ -169,13 +164,9 @@ static char *syscallnames[] = {
   [SYS_link]    "link",
   [SYS_mkdir]   "mkdir",
   [SYS_close]   "close",
-  [SYS_date]    "date",
 #ifdef PDX_XV6
   [SYS_halt]    "halt",
 #endif // PDX_XV6
-#ifdef CS333_P1
-  [SYS_date]    "date",
-#endif // CS333_P1
 };
 #endif // PRINT_SYSCALLS
 
@@ -200,3 +191,5 @@ syscall(void)
     curproc->tf->eax = -1;
   }
 }
+
+

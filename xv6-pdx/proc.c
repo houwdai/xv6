@@ -124,7 +124,6 @@ allocproc(void)
     release(&ptable.lock);
     return 0;
   }
-
   p->state = EMBRYO;
   p->pid = nextpid++;
   release(&ptable.lock);
