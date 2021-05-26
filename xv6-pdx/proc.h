@@ -52,6 +52,12 @@ struct proc {
   #ifdef CS333_P1
     uint start_ticks;
   #endif
+  #ifdef CS333_P2
+    uint uid;                    // UID
+    uint gid;                    // GID
+    uint cpu_ticks_total;        // For process execution time
+    uint cpu_ticks_in;           // For process execution time
+  #endif
 };
 
 // Process memory is laid out contiguously, low addresses first:
